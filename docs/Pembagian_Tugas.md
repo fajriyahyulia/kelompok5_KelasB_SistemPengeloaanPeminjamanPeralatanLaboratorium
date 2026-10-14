@@ -1,55 +1,51 @@
-# Hasil Pengujian Program
+# Pembagian Tugas Kelompok
 
-## 1. Tujuan Pengujian
+Proyek: Sistem Pengelolaan Peminjaman Peralatan Laboratorium
 
-Pengujian dilakukan untuk memeriksa apakah fungsi utama Sistem Pengelolaan Peminjaman Peralatan Laboratorium berjalan sesuai dengan ketentuan tugas. Pengujian mencakup peminjaman alat, ketersediaan alat, pengembalian, dan pengelolaan data mahasiswa.
+Pembagian tugas dilakukan agar setiap anggota memiliki bagian pengerjaan yang jelas. Setelah masing-masing bagian selesai, kode digabungkan dan diperiksa bersama agar dapat berjalan sebagai satu program.
 
-Pengujian menggunakan modul `unittest` dari Python.
+## 1. Fajriyah Yulia Az Zahra (K3525005)
 
-## 2. Skenario Pengujian
+**Tanggung jawab: Koordinator dan integrasi program**
 
-| No. | Skenario | Hasil yang Diharapkan | Status Pengujian Awal |
-|---|---|---|---|
-| 1 | Meminjam beberapa alat dalam satu transaksi | Transaksi dapat menyimpan lebih dari satu alat | Lulus |
-| 2 | Meminjam alat yang tidak tersedia | Sistem menolak peminjaman | Lulus |
-| 3 | Mengembalikan sebagian alat | Status transaksi diperbarui dan alat yang dikembalikan diproses dengan benar | Lulus |
-| 4 | Memeriksa alat yang mengalami kerusakan | Alat yang rusak tidak ditampilkan sebagai alat yang tersedia | Lulus |
-| 5 | Menghapus mahasiswa yang masih memiliki peminjaman aktif | Sistem menolak penghapusan data mahasiswa tersebut | Lulus |
+- Mengatur pembagian tugas dan memantau perkembangan pengerjaan anggota.
+- Menambahkan file `models/enums.py` untuk mendefinisikan pilihan status dan kondisi yang digunakan dalam program.
+- Mengerjakan dan mengintegrasikan `main.py` serta `ui/Menu.py`.
+- Menghubungkan menu dengan fungsi pengelolaan data.
+- Membantu melakukan pengujian program setelah kode anggota digabungkan.
 
-Catatan: status di atas merupakan hasil pengujian awal pada starter project. Semua skenario harus dijalankan kembali pada kode terbaru sebelum laporan final diserahkan.
+## 2. Sulthan Hafizh Putra Agung (K3525013)
 
-## 3. Pengujian Lanjutan
+**Tanggung jawab: Pengelolaan data mahasiswa dan pengujian**
 
-Selain lima skenario di atas, beberapa ketentuan perlu diperiksa setelah seluruh kode digabungkan, yaitu:
+- Mengembangkan class mahasiswa pada `models/mahasiswa.py`.
+- Mengembangkan fungsi pengelolaan data mahasiswa pada `managers/mahasiswa_manager.py`.
+- Menangani validasi data mahasiswa, termasuk NIM yang tidak boleh duplikat.
+- Menerapkan aturan penghapusan data mahasiswa yang masih memiliki transaksi aktif.
+- Menambahkan file `tests/test_basic.py` untuk pengujian dasar program.
 
-| No. | Skenario | Hal yang Perlu Diperiksa |
-|---|---|---|
-| 1 | Menambahkan mahasiswa dengan NIM yang sama | Data duplikat ditolak |
-| 2 | Membatasi jumlah transaksi aktif mahasiswa | Mahasiswa tidak dapat melebihi 2 transaksi aktif |
-| 3 | Menentukan batas waktu peminjaman | Lama peminjaman tidak melebihi 7 hari |
-| 4 | Mengembalikan seluruh alat | Status transaksi berubah menjadi selesai |
-| 5 | Menghapus alat yang masih terikat dengan transaksi aktif | Penghapusan ditolak sesuai aturan program |
-| 6 | Menjalankan menu utama | Pengguna dapat memilih menu dan kembali ke menu utama tanpa program berhenti secara tidak semestinya |
-| 7 | Menjalankan seluruh unit test | Semua pengujian berjalan tanpa error |
+## 3. Zahra Faizza Kuncoroningrum (K3525017)
 
-Status pengujian lanjutan diisi setelah pengujian benar-benar dilakukan.
+**Tanggung jawab: Pengelolaan data peralatan laboratorium**
 
-## 4. Cara Menjalankan Pengujian
+- Mengembangkan class peralatan pada `models/alat.py`.
+- Mengembangkan fungsi pengelolaan peralatan pada `managers/alat_manager.py`.
+- Mengatur data kategori, kondisi, dan ketersediaan alat.
+- Menangani pencarian data peralatan serta daftar alat berdasarkan kondisi dan status ketersediaannya.
+- Membantu memastikan alat yang tidak tersedia tidak dapat dipinjam.
 
-Buka terminal pada folder utama proyek, kemudian jalankan:
+## 4. Muzni Mubarok Salim (K3525036)
 
-```bash
-python -m unittest discover -s tests -v
-```
+**Tanggung jawab: Transaksi peminjaman dan pengembalian**
 
-Jika menggunakan Windows dan perintah `python` tidak dikenali, gunakan:
+- Mengembangkan class transaksi pada `models/transaksi.py`.
+- Mengembangkan detail barang yang dipinjam pada `models/item_pinjam.py`.
+- Mengembangkan fungsi transaksi pada `managers/transaksi_manager.py`.
+- Menangani peminjaman beberapa alat dalam satu transaksi, batas waktu peminjaman, dan pengembalian sebagian maupun seluruh alat.
+- Mengembangkan statistik peminjaman sebagai fitur tambahan.
 
-```bash
-py -m unittest discover -s tests -v
-```
+## Integrasi dan Evaluasi
 
-Periksa hasil setiap pengujian pada terminal. Jika ada pengujian yang gagal, catat nama pengujian dan pesan error untuk diperbaiki.
+Setiap anggota bertanggung jawab terhadap bagian yang dikerjakannya. Setelah kode selesai, seluruh bagian digabungkan pada branch pengembangan (`develop`). Pengujian dilakukan untuk memastikan fungsi tiap bagian dapat berjalan dan tidak menimbulkan masalah ketika digunakan bersama.
 
-## 5. Kesimpulan
-
-Pengujian awal telah mencakup beberapa aturan penting dalam proses peminjaman dan pengembalian alat. Namun, hasil pengujian awal belum cukup untuk menyatakan seluruh program selesai. Pengujian ulang tetap diperlukan setelah semua bagian digabungkan agar hasil yang dicatat sesuai dengan kondisi program final.
+Pembagian ini dapat disesuaikan apabila terdapat perubahan tanggung jawab selama pengerjaan. Kontribusi akhir dicatat berdasarkan pekerjaan yang benar-benar dilakukan oleh masing-masing anggota.
