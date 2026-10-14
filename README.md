@@ -1,67 +1,28 @@
-# Sistem Pengelolaan Peminjaman Peralatan Laboratorium — Kelompok 5
+# Pembagian Tugas Kelompok 5
 
-Aplikasi console Python untuk mengelola data mahasiswa, alat laboratorium, transaksi peminjaman, pengembalian alat, riwayat, dan statistik.
+## Fajriyah — Koordinator dan integrasi
+- `main.py`, `ui/Menu.py`
+- Menu utama dan navigasi ke seluruh fitur
+- Integrasi program, pengecekan program berjalan, dan koordinasi README
 
-## Anggota dan kontribusi
-- Fajriyah — Menu utama, integrasi, `main.py`, `ui/Menu.py`
-- Hafiz — `Mahasiswa`, `MahasiswaManager`
-- Zahra — `Alat`, `AlatManager`, pencarian fleksibel
-- Muzni — `Transaksi`, `ItemPinjam`, `TransaksiManager`, statistik
+## Hafiz — Mahasiswa
+- `models/mahasiswa.py`
+- `managers/mahasiswa_manager.py`
+- CRUD mahasiswa, validasi NIM, batas dua transaksi aktif, larangan hapus mahasiswa yang masih memiliki transaksi aktif
 
-## Teknologi dan batasan
-- Python 3
-- Object-Oriented Programming (OOP)
-- List, dictionary, dan set
-- Tidak menggunakan database
-- Data disimpan di memori dan akan hilang ketika program ditutup
+## Zahra — Alat
+- `models/alat.py`
+- `managers/alat_manager.py`
+- CRUD alat, kategori, kondisi, ketersediaan, pencarian fleksibel
 
-## Struktur program
-```text
-main.py
-models/
-  mahasiswa.py
-  alat.py
-  transaksi.py
-  item_pinjam.py
-  enums.py
-managers/
-  mahasiswa_manager.py
-  alat_manager.py
-  transaksi_manager.py
-ui/
-  Menu.py
-tests/
-  test_basic.py
-docs/
-  Pembagian_Tugas.md
-  Hasil_Pengujian.md
-```
+## Muzni — Transaksi
+- `models/transaksi.py`
+- `models/item_pinjam.py`
+- `managers/transaksi_manager.py`
+- Peminjaman banyak alat, pengembalian sebagian/penuh, riwayat dan statistik
 
-## Cara menjalankan
-Pastikan Python 3 sudah terpasang. Dari direktori proyek, jalankan:
-
-```bash
-python main.py
-```
-
-Pada beberapa komputer Windows, perintahnya dapat berupa `py main.py`.
-
-## Menjalankan pengujian
-```bash
-python -m unittest discover -s tests -v
-```
-
-## Fitur
-1. CRUD data mahasiswa
-2. CRUD data alat
-3. Peminjaman beberapa alat dalam satu transaksi
-4. Pengembalian sebagian atau seluruh alat
-5. Validasi ketersediaan alat dan maksimal dua transaksi aktif per mahasiswa
-6. Batas pengembalian maksimal tujuh hari
-7. Riwayat transaksi mahasiswa
-8. Daftar alat tersedia, dipinjam, dan rusak
-9. Pencarian alat berdasarkan kode, sebagian nama, atau kategori
-10. Statistik alat populer, mahasiswa teraktif, transaksi selesai, dan aktif
-
-## Catatan
-Versi awal ini menyimpan data hanya selama program berjalan. Tutup program berarti data kembali kosong karena database dan penyimpanan permanen tidak digunakan.
+## Kerja bersama
+- Setiap anggota commit menggunakan akun GitHub masing-masing.
+- Setiap anggota menguji fitur yang dibuat.
+- Integrasi dilakukan melalui Pull Request.
+- Fajriyah bukan satu-satunya orang yang bertanggung jawab memperbaiki integrasi.
