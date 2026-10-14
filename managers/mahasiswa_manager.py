@@ -35,5 +35,3 @@ class MahasiswaManager:
 
     def semua(self):
         return list(self.data.values())
-
-
