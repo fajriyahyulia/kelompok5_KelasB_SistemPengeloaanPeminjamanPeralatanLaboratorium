@@ -8,7 +8,6 @@ from managers.mahasiswa_manager import MahasiswaManager
 from managers.alat_manager import AlatManager
 from managers.transaksi_manager import TransaksiManager
 
-
 class Menu:
     def __init__(self):
         self.mhs_mgr = MahasiswaManager()
@@ -17,7 +16,7 @@ class Menu:
 
     def jalankan(self):
         while True:
-            print("\\n=== SISTEM PENGELOLAAN PEMINJAMAN PERALATAN LABORATORIUM ===")
+            print("\n=== SISTEM PENGELOLAAN PEMINJAMAN PERALATAN LABORATORIUM ===")
             print("1. Kelola mahasiswa")
             print("2. Kelola alat")
             print("3. Buat transaksi peminjaman")
@@ -64,7 +63,7 @@ class Menu:
 
     def menu_mahasiswa(self):
         while True:
-            print("\\n--- KELOLA MAHASISWA ---\\n1. Tambah\\n2. Edit\\n3. Hapus\\n4. Cari\\n5. Tampilkan semua\\n0. Kembali")
+            print("\n--- KELOLA MAHASISWA ---\n1. Tambah\n2. Edit\n3. Hapus\n4. Cari\n5. Tampilkan semua\n0. Kembali")
             p = input("Pilih: ").strip()
             try:
                 if p == "1":
@@ -91,7 +90,7 @@ class Menu:
 
     def menu_alat(self):
         while True:
-            print("\\n--- KELOLA ALAT ---\\n1. Tambah\\n2. Edit\\n3. Hapus\\n4. Cari fleksibel\\n5. Tampilkan semua\\n0. Kembali")
+            print("\n--- KELOLA ALAT ---\n1. Tambah\n2. Edit\n3. Hapus\n4. Cari fleksibel\n5. Tampilkan semua\n0. Kembali")
             p = input("Pilih: ").strip()
             try:
                 if p == "1":
@@ -129,7 +128,11 @@ class Menu:
         kode = input("Kode alat yang dikembalikan: ").strip()
         print("Kondisi: BAIK / RUSAK_RINGAN / RUSAK_BERAT")
         kondisi = input("Kondisi alat: ").strip().upper()
-        item = self.trx_mgr.proses_pengembalian(trx_id, kode, KondisiAlat(kondisi))
+        try:
+            kondisi_enum = KondisiAlat(kondisi)
+        except ValueError:
+            raise ValueError("Kondisi harus BAIK, RUSAK_RINGAN, atau RUSAK_BERAT.")
+        item = self.trx_mgr.proses_pengembalian(trx_id, kode, kondisi_enum)
         print(f"Pengembalian {item.alat.kode} berhasil dicatat.")
 
     def tampilkan_daftar(self, daftar):
@@ -148,7 +151,8 @@ class Menu:
 
     def tampilkan_statistik(self):
         s = self.trx_mgr.statistik_peminjaman()
-        print("\\n--- STATISTIK PEMINJAMAN ---")
+        print("\n--- STATISTIK PEMINJAMAN ---")
         print("Alat terpopuler:", s["alat_terpopuler"] or "-")
         print("Mahasiswa teraktif:", s["mahasiswa_teraktif"] or "-")
         print("Transaksi selesai:", s["transaksi_selesai"])
+        print("Transaksi aktif:", s["transaksi_aktif"])
