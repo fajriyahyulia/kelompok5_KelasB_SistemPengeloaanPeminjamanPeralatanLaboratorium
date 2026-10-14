@@ -1,105 +1,59 @@
+from models.enums import KondisiAlat
+
+
 class AlatManager:
-
     def __init__(self):
-        self.daftar_alat = []
+        self.data = {}
+        self.kategori = set()
 
+    def tambah(self, alat):
+        if alat.kode in self.data:
+            raise ValueError("Kode alat sudah terdaftar.")
+        self.data[alat.kode] = alat
+        self.kategori.add(alat.kategori)
+        return alat
 
-    # CREATE
-    def tambah_alat(self, alat):
-        self.daftar_alat.append(alat)
-        print("Alat berhasil ditambahkan")
+    def edit(self, kode, nama=None, kategori=None):
+        alat = self.get(kode)
+        if nama is not None and nama.strip():
+            alat.nama = nama.strip()
+        if kategori is not None and kategori.strip():
+            alat.kategori = kategori.strip()
+            self.kategori.add(alat.kategori)
+        return alat
 
+    def hapus(self, kode, transaksi_list):
+        alat = self.get(kode)
+        if any(trx.is_aktif() and trx.punya_alat(alat.kode) for trx in transaksi_list):
+            raise ValueError("Alat masih tercatat dalam transaksi aktif.")
+        del self.data[alat.kode]
+        return True
 
-    # READ
-    def tampilkan_semua(self):
+    def cari(self, keyword):
+        keyword = keyword.lower()
+        return [a for a in self.data.values()
+                if keyword in a.kode.lower()
+                or keyword in a.nama.lower()
+                or keyword in a.kategori.lower()]
 
-        if len(self.daftar_alat) == 0:
-            print("Belum ada data alat")
-            return
+    def get(self, kode):
+        kode = kode.strip().upper()
+        if kode not in self.data:
+            raise ValueError("Alat tidak ditemukan.")
+        return self.data[kode]
 
+    def semua(self):
+        return list(self.data.values())
 
-        for alat in self.daftar_alat:
-            print("====================")
-            print(alat.tampilkan_info())
+    def daftar_tersedia(self):
+        return [a for a in self.data.values() if a.is_tersedia()]
 
+    def daftar_dipinjam(self, transaksi_list):
+        kode_dipinjam = {
+            item.alat.kode for trx in transaksi_list for item in trx.daftar_item
+            if not item.sudah_kembali
+        }
+        return [self.data[k] for k in kode_dipinjam if k in self.data]
 
-    # SEARCH
-    def cari_alat(self, kode):
-
-        for alat in self.daftar_alat:
-
-            if alat.kode == kode:
-                return alat
-
-        return None
-
-
-
-    # UPDATE
-    def edit_alat(self, kode, nama_baru, kategori_baru, kondisi_baru):
-
-        alat = self.cari_alat(kode)
-
-
-        if alat:
-
-            alat.nama = nama_baru
-            alat.kategori = kategori_baru
-            alat.kondisi = kondisi_baru
-
-            print("Data alat berhasil diperbarui")
-
-        else:
-
-            print("Alat tidak ditemukan")
-
-
-
-    # DELETE
-    def hapus_alat(self, kode):
-
-        alat = self.cari_alat(kode)
-
-
-        if alat:
-
-            if alat.status == "dipinjam":
-
-                print("Alat masih dipinjam, tidak bisa dihapus")
-                return
-
-
-            self.daftar_alat.remove(alat)
-
-            print("Alat berhasil dihapus")
-
-
-        else:
-
-            print("Alat tidak ditemukan")
-
-
-
-    # MENAMPILKAN ALAT TERSEDIA
-    def tampilkan_tersedia(self):
-
-        print("DAFTAR ALAT TERSEDIA")
-
-        for alat in self.daftar_alat:
-
-            if alat.status == "tersedia":
-
-                print(alat.tampilkan_info())
-
-
-
-    # MENAMPILKAN ALAT RUSAK
-    def tampilkan_rusak(self):
-
-        print("DAFTAR ALAT RUSAK")
-
-        for alat in self.daftar_alat:
-
-            if alat.kondisi != "baik":
-
-                print(alat.tampilkan_info())
+    def daftar_rusak(self):
+        return [a for a in self.data.values() if a.kondisi != KondisiAlat.BAIK]
