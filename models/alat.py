@@ -4,16 +4,9 @@ from models.enums import KondisiAlat
 class Alat:
     def __init__(self, kode: str, nama: str, kategori: str,
                  kondisi=KondisiAlat.BAIK, tersedia=True):
-        kode, nama, kategori = kode.strip().upper(), nama.strip(), kategori.strip()
-        if not kode:
-            raise ValueError("Kode alat tidak boleh kosong.")
-        if not nama:
-            raise ValueError("Nama alat tidak boleh kosong.")
-        if not kategori:
-            raise ValueError("Kategori alat tidak boleh kosong.")
-        self.kode = kode
-        self.nama = nama
-        self.kategori = kategori
+        self.kode = kode.strip().upper()
+        self.nama = nama.strip()
+        self.kategori = kategori.strip()
         self.kondisi = kondisi if isinstance(kondisi, KondisiAlat) else KondisiAlat(kondisi)
         self.tersedia = bool(tersedia)
 
